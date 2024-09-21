@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const API_KEY = "41a38b7346fd52edff9439e06ec75408";
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 const CitySearch = ({ onCitySelect }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,7 +37,7 @@ const CitySearch = ({ onCitySelect }) => {
     setError(null);
     try {
       const response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${searchTerm}&limit=5&appid=${API_KEY}`
+        `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/geo/1.0/direct?q=${searchTerm}&limit=5&appid=${API_KEY}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch cities");
