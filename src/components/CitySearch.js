@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const API_KEY = process.env.REACT_APP_API_KEY;
+const API_KEY = "41a38b7346fd52edff9439e06ec75408";
 
 const CitySearch = ({ onCitySelect }) => {
   const [isOpen, setIsOpen] = useState(false);
