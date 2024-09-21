@@ -22,7 +22,7 @@ const ForecastDisplay = ({ data, unit }) => {
         <div key={forecast.dt} className="text-center">
           <h3 className="font-semibold">{getDayOfWeek(forecast.dt_txt)}</h3>
           <img
-            src={`http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`}
+            src={`https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`}
             alt={forecast.weather[0].description}
             className="w-16 h-16 mx-auto"
           />

@@ -21,7 +21,7 @@ const WeatherDisplay = ({ data, unit }) => {
           <p className="text-xl mt-2">{weather[0].main}</p>
         </div>
         <img
-          src={`http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
+          src={`https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
           alt={weather[0].description}
           className="w-24 h-24 ml-4"
         />
