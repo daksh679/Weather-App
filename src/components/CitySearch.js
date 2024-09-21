@@ -37,7 +37,7 @@ const CitySearch = ({ onCitySelect }) => {
     setError(null);
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/geo/1.0/direct?q=${searchTerm}&limit=5&appid=${API_KEY}``https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/geo/1.0/direct?q=${searchTerm}&limit=5&appid=${API_KEY}`
+        `https://api.openweathermap.org/geo/1.0/direct?q=${searchTerm}&limit=5&appid=${API_KEY}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch cities");
