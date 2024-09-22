@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import debounce from "lodash.debounce";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -23,35 +24,38 @@ const CitySearch = ({ onCitySelect }) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (searchTerm.length > 2) {
-      handleSearch();
-    } else {
-      setCities([]);
-      setIsOpen(false);
-    }
-  }, [searchTerm]);
-
-  const handleSearch = async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(
-        `https://api.openweathermap.org/geo/1.0/direct?q=${searchTerm}&limit=5&appid=${API_KEY}`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch cities");
+  const handleSearch = useCallback(
+    debounce(async (term) => {
+      if (term.length > 2) {
+        setIsLoading(true);
+        setError(null);
+        try {
+          const response = await fetch(
+            `https://api.openweathermap.org/geo/1.0/direct?q=${term}&limit=5&appid=${API_KEY}`
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch cities");
+          }
+          const data = await response.json();
+          setCities(data);
+          setIsOpen(true);
+        } catch (err) {
+          setError("Failed to fetch cities. Please try again.");
+          setCities([]);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        setCities([]);
+        setIsOpen(false);
       }
-      const data = await response.json();
-      setCities(data);
-      setIsOpen(true);
-    } catch (err) {
-      setError("Failed to fetch cities. Please try again.");
-      setCities([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    }, 300),
+    []
+  );
+
+  useEffect(() => {
+    handleSearch(searchTerm);
+  }, [searchTerm, handleSearch]);
 
   const handleCitySelect = (city) => {
     onCitySelect(city.name);
